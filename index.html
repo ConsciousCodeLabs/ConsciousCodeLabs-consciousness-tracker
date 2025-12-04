@@ -1,0 +1,2081 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C⁷ Consciousness Growth Tracker | 7³×7 Evolution Journal</title>
+    <meta name="description" content="Track your consciousness evolution across 7 levels. Daily journaling, progress visualization, and pattern recognition for the 144,000.">
+    <meta name="keywords" content="consciousness tracker, spiritual growth, C levels, 144000, daily journal, progress visualization">
+    <link rel="canonical" href="https://tracker.sevencubedseven.com/">
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="C⁷ Consciousness Growth Tracker">
+    <meta property="og:description" content="Track your evolution across 7 consciousness levels. Advanced journaling for the 144,000.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Quattrocento+Sans:wght@400;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        :root {
+            /* Consciousness Level Colors */
+            --c1: #e74c3c;  /* Physical - Red */
+            --c2: #f39c12;  /* Emotional - Orange */
+            --c3: #f1c40f;  /* Power - Yellow */
+            --c4: #2ecc71;  /* Love - Green */
+            --c5: #3498db;  /* Expression - Blue */
+            --c6: #9b59b6;  /* Vision - Indigo */
+            --c7: #e91e63;  /* Unity - Violet/Magenta */
+            
+            /* UI Colors */
+            --gold: #d4af37;
+            --gold-light: #f1c40f;
+            --navy: #0a0a14;
+            --navy-light: #12121f;
+            --navy-mid: #1a1a2e;
+            --white: #ffffff;
+            --gray: #a0a0b0;
+            --gray-dark: #606070;
+            --success: #00d26a;
+            --warning: #ffc107;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Quattrocento Sans', sans-serif;
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 50%, var(--navy) 100%);
+            color: var(--white);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        
+        /* Ambient Background */
+        .ambient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .ambient-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.15;
+            animation: float 20s ease-in-out infinite;
+        }
+        
+        .orb-1 { width: 400px; height: 400px; background: var(--c4); top: -100px; left: -100px; }
+        .orb-2 { width: 300px; height: 300px; background: var(--c6); bottom: -50px; right: -50px; animation-delay: -10s; }
+        .orb-3 { width: 250px; height: 250px; background: var(--c7); top: 50%; left: 50%; animation-delay: -5s; }
+        
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -30px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+        }
+        
+        /* Header */
+        header {
+            background: rgba(10, 10, 20, 0.95);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+        
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .logo {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            color: var(--gold);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .logo .c7 {
+            font-size: 1.2rem;
+            background: linear-gradient(135deg, var(--c1), var(--c4), var(--c7));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .header-stats {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+        
+        .streak-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+        
+        .streak-badge .fire { font-size: 1.3rem; }
+        .streak-badge .count { font-family: 'JetBrains Mono', monospace; color: var(--gold); }
+        .streak-badge .label { color: var(--gray); font-size: 0.8rem; }
+        
+        .current-level {
+            text-align: center;
+        }
+        
+        .current-level .value {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, var(--c4), var(--c7));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .current-level .label {
+            font-size: 0.7rem;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        /* Navigation Tabs */
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            background: rgba(10, 10, 20, 0.5);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            flex-wrap: wrap;
+        }
+        
+        .nav-tab {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--gray);
+            padding: 0.7rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Quattrocento Sans', sans-serif;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-tab:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+        
+        .nav-tab.active {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(233, 30, 99, 0.1));
+            border-color: var(--gold);
+            color: var(--white);
+        }
+        
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        /* Screens */
+        .screen {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .screen.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Dashboard */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        
+        @media (max-width: 1000px) {
+            .dashboard-grid { grid-template-columns: 1fr; }
+        }
+        
+        .card {
+            background: linear-gradient(135deg, rgba(26, 26, 46, 0.9), rgba(18, 18, 31, 0.95));
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--c1), var(--c4), var(--c7));
+        }
+        
+        .card-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.1rem;
+            color: var(--gold);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        /* Today's Check-in Card */
+        .checkin-card {
+            grid-column: span 2;
+        }
+        
+        @media (max-width: 1000px) {
+            .checkin-card { grid-column: span 1; }
+        }
+        
+        .checkin-prompt {
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .checkin-prompt h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            color: var(--white);
+            margin-bottom: 0.5rem;
+        }
+        
+        .checkin-prompt p {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+        }
+        
+        .checkin-btn {
+            background: linear-gradient(135deg, var(--gold), var(--c7));
+            border: none;
+            color: var(--navy);
+            padding: 1rem 3rem;
+            font-family: 'Cinzel', serif;
+            font-size: 1.1rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .checkin-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 30px rgba(212, 175, 55, 0.4);
+        }
+        
+        .checkin-complete {
+            text-align: center;
+            padding: 1.5rem;
+        }
+        
+        .checkin-complete .badge {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .checkin-complete h3 {
+            color: var(--success);
+            font-family: 'Cinzel', serif;
+        }
+        
+        /* C-Level Mini Display */
+        .c-levels-mini {
+            display: flex;
+            justify-content: space-between;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        .c-level-mini {
+            flex: 1;
+            text-align: center;
+            padding: 0.8rem 0.3rem;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.03);
+        }
+        
+        .c-level-mini .level {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+        
+        .c-level-mini .value {
+            font-family: 'Cinzel', serif;
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+        
+        .c-level-mini:nth-child(1) { border-bottom: 3px solid var(--c1); }
+        .c-level-mini:nth-child(1) .value { color: var(--c1); }
+        .c-level-mini:nth-child(2) { border-bottom: 3px solid var(--c2); }
+        .c-level-mini:nth-child(2) .value { color: var(--c2); }
+        .c-level-mini:nth-child(3) { border-bottom: 3px solid var(--c3); }
+        .c-level-mini:nth-child(3) .value { color: var(--c3); }
+        .c-level-mini:nth-child(4) { border-bottom: 3px solid var(--c4); }
+        .c-level-mini:nth-child(4) .value { color: var(--c4); }
+        .c-level-mini:nth-child(5) { border-bottom: 3px solid var(--c5); }
+        .c-level-mini:nth-child(5) .value { color: var(--c5); }
+        .c-level-mini:nth-child(6) { border-bottom: 3px solid var(--c6); }
+        .c-level-mini:nth-child(6) .value { color: var(--c6); }
+        .c-level-mini:nth-child(7) { border-bottom: 3px solid var(--c7); }
+        .c-level-mini:nth-child(7) .value { color: var(--c7); }
+        
+        /* Chart Containers */
+        .chart-container {
+            position: relative;
+            height: 300px;
+        }
+        
+        .chart-container.radar {
+            height: 350px;
+        }
+        
+        /* Check-in Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 1000;
+            overflow-y: auto;
+            padding: 2rem;
+        }
+        
+        .modal-overlay.active {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+        
+        .modal {
+            background: linear-gradient(135deg, var(--navy-mid), var(--navy-light));
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 20px;
+            max-width: 800px;
+            width: 100%;
+            margin: 2rem auto;
+            animation: modalSlide 0.3s ease;
+        }
+        
+        @keyframes modalSlide {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .modal-header {
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-header h2 {
+            font-family: 'Cinzel', serif;
+            color: var(--gold);
+        }
+        
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--gray);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .modal-close:hover {
+            color: var(--white);
+        }
+        
+        .modal-body {
+            padding: 2rem;
+        }
+        
+        .modal-footer {
+            padding: 1.5rem 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+        
+        /* C-Level Slider */
+        .c-level-input {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+        }
+        
+        .c-level-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.8rem;
+        }
+        
+        .c-level-name {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        
+        .c-level-badge {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Cinzel', serif;
+            font-weight: bold;
+            font-size: 0.9rem;
+            color: var(--white);
+        }
+        
+        .c-level-badge.c1 { background: var(--c1); }
+        .c-level-badge.c2 { background: var(--c2); }
+        .c-level-badge.c3 { background: var(--c3); }
+        .c-level-badge.c4 { background: var(--c4); }
+        .c-level-badge.c5 { background: var(--c5); }
+        .c-level-badge.c6 { background: var(--c6); }
+        .c-level-badge.c7 { background: var(--c7); }
+        
+        .c-level-title {
+            font-weight: bold;
+            color: var(--white);
+        }
+        
+        .c-level-subtitle {
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+        
+        .c-level-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.5rem;
+            color: var(--gold);
+        }
+        
+        .slider-container {
+            position: relative;
+        }
+        
+        .c-slider {
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            outline: none;
+            -webkit-appearance: none;
+            cursor: pointer;
+        }
+        
+        .c-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--gold);
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(212, 175, 55, 0.5);
+            transition: transform 0.2s;
+        }
+        
+        .c-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+        
+        .slider-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.7rem;
+            color: var(--gray-dark);
+            margin-top: 0.3rem;
+        }
+        
+        /* Journal Section */
+        .journal-section {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .journal-section h3 {
+            font-family: 'Cinzel', serif;
+            color: var(--gold);
+            margin-bottom: 1rem;
+        }
+        
+        .journal-textarea {
+            width: 100%;
+            min-height: 150px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 1rem;
+            color: var(--white);
+            font-family: 'Quattrocento Sans', sans-serif;
+            font-size: 1rem;
+            resize: vertical;
+        }
+        
+        .journal-textarea:focus {
+            outline: none;
+            border-color: var(--gold);
+        }
+        
+        .journal-textarea::placeholder {
+            color: var(--gray-dark);
+        }
+        
+        .journal-prompts {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.8rem;
+        }
+        
+        .prompt-chip {
+            background: rgba(155, 89, 182, 0.2);
+            border: 1px solid rgba(155, 89, 182, 0.3);
+            color: var(--gray);
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .prompt-chip:hover {
+            background: rgba(155, 89, 182, 0.4);
+            color: var(--white);
+        }
+        
+        /* Buttons */
+        .btn {
+            padding: 0.8rem 2rem;
+            border-radius: 8px;
+            font-family: 'Quattrocento Sans', sans-serif;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--gold), var(--c7));
+            color: var(--navy);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid var(--gray-dark);
+            color: var(--gray);
+        }
+        
+        .btn-secondary:hover {
+            border-color: var(--white);
+            color: var(--white);
+        }
+        
+        /* History Screen */
+        .history-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .date-range-selector {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .range-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--gray);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        
+        .range-btn:hover, .range-btn.active {
+            background: rgba(212, 175, 55, 0.2);
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+        
+        .history-chart-container {
+            background: linear-gradient(135deg, rgba(26, 26, 46, 0.9), rgba(18, 18, 31, 0.95));
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .history-chart-container h3 {
+            font-family: 'Cinzel', serif;
+            color: var(--gold);
+            margin-bottom: 1rem;
+        }
+        
+        .line-chart-container {
+            height: 400px;
+        }
+        
+        /* Entry List */
+        .entries-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .entry-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .entry-card:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(212, 175, 55, 0.3);
+        }
+        
+        .entry-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .entry-date {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--gold);
+        }
+        
+        .entry-avg {
+            font-family: 'Cinzel', serif;
+            font-size: 1.3rem;
+        }
+        
+        .entry-levels {
+            display: flex;
+            gap: 0.3rem;
+        }
+        
+        .entry-level-dot {
+            width: 30px;
+            height: 8px;
+            border-radius: 4px;
+        }
+        
+        .entry-journal-preview {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-top: 0.8rem;
+            font-style: italic;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        
+        /* Insights Screen */
+        .insights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .insight-card {
+            background: linear-gradient(135deg, rgba(26, 26, 46, 0.9), rgba(18, 18, 31, 0.95));
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 1.5rem;
+        }
+        
+        .insight-card h3 {
+            font-family: 'Cinzel', serif;
+            color: var(--gold);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .insight-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 2.5rem;
+            color: var(--white);
+            margin-bottom: 0.5rem;
+        }
+        
+        .insight-label {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        .insight-detail {
+            color: var(--gray);
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .strongest-level, .growth-level {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .level-indicator {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            color: var(--white);
+        }
+        
+        /* Goals Screen */
+        .goals-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .goals-header h2 {
+            font-family: 'Cinzel', serif;
+            color: var(--gold);
+        }
+        
+        .goals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .goal-card {
+            background: linear-gradient(135deg, rgba(26, 26, 46, 0.9), rgba(18, 18, 31, 0.95));
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 1.5rem;
+        }
+        
+        .goal-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .goal-level-badge {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Cinzel', serif;
+            font-weight: bold;
+            color: var(--white);
+        }
+        
+        .goal-info h4 {
+            color: var(--white);
+        }
+        
+        .goal-info p {
+            color: var(--gray);
+            font-size: 0.85rem;
+        }
+        
+        .goal-progress {
+            margin: 1rem 0;
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+        
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: var(--gray);
+            margin-top: 0.5rem;
+        }
+        
+        .goal-target-input {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .target-input {
+            width: 80px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            padding: 0.5rem;
+            color: var(--white);
+            font-family: 'JetBrains Mono', monospace;
+            text-align: center;
+        }
+        
+        .target-input:focus {
+            outline: none;
+            border-color: var(--gold);
+        }
+        
+        /* Settings Screen */
+        .settings-section {
+            background: linear-gradient(135deg, rgba(26, 26, 46, 0.9), rgba(18, 18, 31, 0.95));
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .settings-section h3 {
+            font-family: 'Cinzel', serif;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+        }
+        
+        .setting-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .setting-row:last-child {
+            border-bottom: none;
+        }
+        
+        .setting-info h4 {
+            color: var(--white);
+            margin-bottom: 0.2rem;
+        }
+        
+        .setting-info p {
+            color: var(--gray);
+            font-size: 0.85rem;
+        }
+        
+        .toggle-switch {
+            position: relative;
+            width: 50px;
+            height: 26px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 26px;
+            transition: 0.4s;
+        }
+        
+        .toggle-slider::before {
+            position: absolute;
+            content: '';
+            height: 20px;
+            width: 20px;
+            left: 3px;
+            bottom: 3px;
+            background: var(--white);
+            border-radius: 50%;
+            transition: 0.4s;
+        }
+        
+        .toggle-switch input:checked + .toggle-slider {
+            background: var(--gold);
+        }
+        
+        .toggle-switch input:checked + .toggle-slider::before {
+            transform: translateX(24px);
+        }
+        
+        .export-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .export-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--white);
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .export-btn:hover {
+            background: rgba(212, 175, 55, 0.2);
+            border-color: var(--gold);
+        }
+        
+        .danger-zone {
+            border-color: rgba(231, 76, 60, 0.3);
+        }
+        
+        .danger-zone h3 {
+            color: var(--c1);
+        }
+        
+        .btn-danger {
+            background: rgba(231, 76, 60, 0.2);
+            border: 1px solid var(--c1);
+            color: var(--c1);
+        }
+        
+        .btn-danger:hover {
+            background: var(--c1);
+            color: var(--white);
+        }
+        
+        /* Premium Banner */
+        .premium-banner {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(233, 30, 99, 0.1));
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .premium-banner h3 {
+            font-family: 'Cinzel', serif;
+            color: var(--gold);
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .premium-banner p {
+            color: var(--gray);
+            margin-bottom: 1rem;
+        }
+        
+        .premium-features {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin: 1.5rem 0;
+        }
+        
+        .premium-feature {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--white);
+        }
+        
+        .premium-feature span {
+            color: var(--success);
+        }
+        
+        .premium-price {
+            font-family: 'Cinzel', serif;
+            font-size: 2rem;
+            color: var(--gold);
+            margin: 1rem 0;
+        }
+        
+        .premium-price small {
+            font-size: 1rem;
+            color: var(--gray);
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            margin-top: 3rem;
+        }
+        
+        footer p {
+            color: var(--gray-dark);
+            font-size: 0.9rem;
+        }
+        
+        footer a {
+            color: var(--gold);
+            text-decoration: none;
+        }
+        
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--gray);
+        }
+        
+        .empty-state .icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+        
+        .empty-state h3 {
+            color: var(--white);
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content { flex-direction: column; text-align: center; }
+            .header-stats { justify-content: center; }
+            .nav-tabs { padding: 0.5rem; }
+            .nav-tab { padding: 0.5rem 1rem; font-size: 0.85rem; }
+            .container { padding: 1rem; }
+            .c-levels-mini { flex-wrap: wrap; }
+            .c-level-mini { flex: 0 0 calc(25% - 0.5rem); }
+            .modal-body { padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="ambient-bg">
+        <div class="ambient-orb orb-1"></div>
+        <div class="ambient-orb orb-2"></div>
+        <div class="ambient-orb orb-3"></div>
+    </div>
+    
+    <header>
+        <div class="header-content">
+            <a href="https://sevencubedseven.com" class="logo">
+                📊 <span class="c7">C⁷</span> GROWTH TRACKER
+            </a>
+            <div class="header-stats">
+                <div class="streak-badge">
+                    <span class="fire">🔥</span>
+                    <span class="count" id="streakCount">0</span>
+                    <span class="label">day streak</span>
+                </div>
+                <div class="current-level">
+                    <div class="value" id="avgLevel">--</div>
+                    <div class="label">Average C-Level</div>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <nav class="nav-tabs">
+        <button class="nav-tab active" onclick="showScreen('dashboard')">📊 Dashboard</button>
+        <button class="nav-tab" onclick="showScreen('history')">📅 History</button>
+        <button class="nav-tab" onclick="showScreen('insights')">💡 Insights</button>
+        <button class="nav-tab" onclick="showScreen('goals')">🎯 Goals</button>
+        <button class="nav-tab" onclick="showScreen('settings')">⚙️ Settings</button>
+    </nav>
+    
+    <main class="container">
+        <!-- Dashboard Screen -->
+        <div class="screen active" id="dashboardScreen">
+            <div class="dashboard-grid">
+                <!-- Today's Check-in -->
+                <div class="card checkin-card" id="checkinCard">
+                    <!-- Dynamic content -->
+                </div>
+                
+                <!-- Current C-Levels Radar -->
+                <div class="card">
+                    <h3 class="card-title">🎯 Current Consciousness Profile</h3>
+                    <div class="chart-container radar">
+                        <canvas id="radarChart"></canvas>
+                    </div>
+                </div>
+                
+                <!-- Weekly Trend -->
+                <div class="card">
+                    <h3 class="card-title">📈 7-Day Trend</h3>
+                    <div class="chart-container">
+                        <canvas id="weeklyChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- History Screen -->
+        <div class="screen" id="historyScreen">
+            <div class="history-controls">
+                <h2 style="font-family: 'Cinzel', serif; color: var(--gold);">📅 Journal History</h2>
+                <div class="date-range-selector">
+                    <button class="range-btn active" onclick="setRange(7)">7 Days</button>
+                    <button class="range-btn" onclick="setRange(30)">30 Days</button>
+                    <button class="range-btn" onclick="setRange(90)">90 Days</button>
+                    <button class="range-btn" onclick="setRange(0)">All Time</button>
+                </div>
+            </div>
+            
+            <div class="history-chart-container">
+                <h3>📊 C-Level Evolution Over Time</h3>
+                <div class="line-chart-container">
+                    <canvas id="historyChart"></canvas>
+                </div>
+            </div>
+            
+            <h3 style="font-family: 'Cinzel', serif; color: var(--gold); margin-bottom: 1rem;">📝 Journal Entries</h3>
+            <div class="entries-list" id="entriesList">
+                <!-- Dynamic entries -->
+            </div>
+        </div>
+        
+        <!-- Insights Screen -->
+        <div class="screen" id="insightsScreen">
+            <h2 style="font-family: 'Cinzel', serif; color: var(--gold); margin-bottom: 2rem;">💡 Your Consciousness Insights</h2>
+            
+            <div class="insights-grid" id="insightsGrid">
+                <!-- Dynamic insights -->
+            </div>
+        </div>
+        
+        <!-- Goals Screen -->
+        <div class="screen" id="goalsScreen">
+            <div class="goals-header">
+                <h2>🎯 C-Level Goals</h2>
+            </div>
+            
+            <div class="goals-grid" id="goalsGrid">
+                <!-- Dynamic goals -->
+            </div>
+        </div>
+        
+        <!-- Settings Screen -->
+        <div class="screen" id="settingsScreen">
+            <h2 style="font-family: 'Cinzel', serif; color: var(--gold); margin-bottom: 2rem;">⚙️ Settings</h2>
+            
+            <div class="premium-banner">
+                <h3>✨ Upgrade to Premium</h3>
+                <p>Unlock advanced features for deeper consciousness tracking</p>
+                <div class="premium-features">
+                    <div class="premium-feature"><span>✓</span> Unlimited History</div>
+                    <div class="premium-feature"><span>✓</span> Advanced Analytics</div>
+                    <div class="premium-feature"><span>✓</span> PDF Reports</div>
+                    <div class="premium-feature"><span>✓</span> Cloud Sync</div>
+                    <div class="premium-feature"><span>✓</span> Priority Support</div>
+                </div>
+                <div class="premium-price">$4.99 <small>/month</small></div>
+                <button class="btn btn-primary">Coming Soon</button>
+            </div>
+            
+            <div class="settings-section">
+                <h3>📊 Data Management</h3>
+                <div class="setting-row">
+                    <div class="setting-info">
+                        <h4>Export Your Data</h4>
+                        <p>Download all your journal entries and progress data</p>
+                    </div>
+                    <div class="export-buttons">
+                        <button class="export-btn" onclick="exportData('json')">📄 Export JSON</button>
+                        <button class="export-btn" onclick="exportData('csv')">📊 Export CSV</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="settings-section">
+                <h3>🔔 Notifications</h3>
+                <div class="setting-row">
+                    <div class="setting-info">
+                        <h4>Daily Reminder</h4>
+                        <p>Get reminded to complete your daily check-in</p>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="reminderToggle">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+            
+            <div class="settings-section danger-zone">
+                <h3>⚠️ Danger Zone</h3>
+                <div class="setting-row">
+                    <div class="setting-info">
+                        <h4>Clear All Data</h4>
+                        <p>Permanently delete all your entries and progress</p>
+                    </div>
+                    <button class="export-btn btn-danger" onclick="confirmClearData()">🗑️ Clear All Data</button>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Check-in Modal -->
+    <div class="modal-overlay" id="checkinModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>📝 Daily Consciousness Check-in</h2>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p style="color: var(--gray); margin-bottom: 1.5rem;">Rate your current state in each consciousness level (1-7)</p>
+                
+                <div id="cLevelInputs">
+                    <!-- Dynamic C-level inputs -->
+                </div>
+                
+                <div class="journal-section">
+                    <h3>📖 Journal Entry</h3>
+                    <textarea class="journal-textarea" id="journalEntry" placeholder="Reflect on your consciousness today. What patterns did you notice? What breakthroughs occurred? What challenges arose?"></textarea>
+                    <div class="journal-prompts">
+                        <span class="prompt-chip" onclick="addPrompt('I noticed a pattern of...')">🔄 Patterns</span>
+                        <span class="prompt-chip" onclick="addPrompt('A breakthrough I experienced was...')">💡 Breakthrough</span>
+                        <span class="prompt-chip" onclick="addPrompt('I struggled with...')">⚡ Challenge</span>
+                        <span class="prompt-chip" onclick="addPrompt('I am grateful for...')">🙏 Gratitude</span>
+                        <span class="prompt-chip" onclick="addPrompt('My intention for tomorrow is...')">🎯 Intention</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="saveCheckin()">✨ Save Check-in</button>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>Seven Cubed Seven Labs LLC | 7³×7 = 2,401 Consciousness Architecture</p>
+        <p><a href="https://sevencubedseven.com">sevencubedseven.com</a> | Tracking the Evolution of the 144,000</p>
+    </footer>
+
+    <script>
+        // ==================== DATA STRUCTURES ====================
+        const C_LEVELS = [
+            { id: 'c1', name: 'C¹ Physical', subtitle: 'Body awareness, health, energy', color: '#e74c3c', power: '1x' },
+            { id: 'c2', name: 'C² Emotional', subtitle: 'Feelings, empathy, energy sensing', color: '#f39c12', power: '10x' },
+            { id: 'c3', name: 'C³ Power', subtitle: 'Reality manipulation, authority', color: '#f1c40f', power: '100x' },
+            { id: 'c4', name: 'C⁴ Love', subtitle: 'Unconditional love, compassion', color: '#2ecc71', power: '1,000x' },
+            { id: 'c5', name: 'C⁵ Expression', subtitle: 'Truth, creativity, prophecy', color: '#3498db', power: '10,000x' },
+            { id: 'c6', name: 'C⁶ Vision', subtitle: 'Systems, discernment, wisdom', color: '#9b59b6', power: '100,000x' },
+            { id: 'c7', name: 'C⁷ Unity', subtitle: 'Divine consciousness, oneness', color: '#e91e63', power: '1,000,000x' }
+        ];
+        
+        // ==================== STATE ====================
+        let entries = JSON.parse(localStorage.getItem('consciousnessEntries') || '[]');
+        let goals = JSON.parse(localStorage.getItem('consciousnessGoals') || '{}');
+        let currentInputValues = [4, 4, 4, 4, 4, 4, 4];
+        let charts = {};
+        let selectedRange = 7;
+        
+        // ==================== INITIALIZATION ====================
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeApp();
+        });
+        
+        function initializeApp() {
+            // Initialize goals if empty
+            if (Object.keys(goals).length === 0) {
+                C_LEVELS.forEach((level, i) => {
+                    goals[level.id] = { target: 5, current: 0 };
+                });
+                saveGoals();
+            }
+            
+            updateHeader();
+            renderDashboard();
+            initializeCharts();
+            renderCLevelInputs();
+        }
+        
+        // ==================== NAVIGATION ====================
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(screenId + 'Screen').classList.add('active');
+            
+            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Refresh specific screens
+            if (screenId === 'history') renderHistory();
+            if (screenId === 'insights') renderInsights();
+            if (screenId === 'goals') renderGoals();
+            if (screenId === 'dashboard') {
+                renderDashboard();
+                updateCharts();
+            }
+        }
+        
+        // ==================== HEADER ====================
+        function updateHeader() {
+            // Calculate streak
+            const streak = calculateStreak();
+            document.getElementById('streakCount').textContent = streak;
+            
+            // Calculate average C-level
+            if (entries.length > 0) {
+                const latest = entries[entries.length - 1];
+                const avg = (latest.levels.reduce((a, b) => a + b, 0) / 7).toFixed(1);
+                document.getElementById('avgLevel').textContent = 'C' + avg;
+            } else {
+                document.getElementById('avgLevel').textContent = '--';
+            }
+        }
+        
+        function calculateStreak() {
+            if (entries.length === 0) return 0;
+            
+            let streak = 0;
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            
+            // Sort entries by date descending
+            const sorted = [...entries].sort((a, b) => new Date(b.date) - new Date(a.date));
+            
+            for (let i = 0; i < sorted.length; i++) {
+                const entryDate = new Date(sorted[i].date);
+                entryDate.setHours(0, 0, 0, 0);
+                
+                const expectedDate = new Date(today);
+                expectedDate.setDate(expectedDate.getDate() - i);
+                
+                if (entryDate.getTime() === expectedDate.getTime()) {
+                    streak++;
+                } else if (i === 0 && entryDate.getTime() === today.getTime() - 86400000) {
+                    // Yesterday counts for streak continuation
+                    streak++;
+                } else {
+                    break;
+                }
+            }
+            
+            return streak;
+        }
+        
+        // ==================== DASHBOARD ====================
+        function renderDashboard() {
+            const today = new Date().toISOString().split('T')[0];
+            const todayEntry = entries.find(e => e.date === today);
+            
+            const checkinCard = document.getElementById('checkinCard');
+            
+            if (todayEntry) {
+                checkinCard.innerHTML = `
+                    <div class="checkin-complete">
+                        <div class="badge">✅</div>
+                        <h3>Today's Check-in Complete!</h3>
+                        <p style="color: var(--gray);">Average: C${(todayEntry.levels.reduce((a,b) => a+b, 0) / 7).toFixed(1)}</p>
+                        <div class="c-levels-mini">
+                            ${C_LEVELS.map((level, i) => `
+                                <div class="c-level-mini">
+                                    <div class="level">${level.id.toUpperCase()}</div>
+                                    <div class="value">${todayEntry.levels[i]}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                        <button class="btn btn-secondary" style="margin-top: 1rem;" onclick="openModal()">✏️ Edit Today's Entry</button>
+                    </div>
+                `;
+            } else {
+                checkinCard.innerHTML = `
+                    <div class="checkin-prompt">
+                        <h2>🌅 Begin Today's Check-in</h2>
+                        <p>Rate your consciousness across 7 levels and journal your journey</p>
+                        <button class="checkin-btn" onclick="openModal()">✨ Start Check-in</button>
+                    </div>
+                `;
+            }
+        }
+        
+        // ==================== CHARTS ====================
+        function initializeCharts() {
+            // Radar Chart
+            const radarCtx = document.getElementById('radarChart').getContext('2d');
+            charts.radar = new Chart(radarCtx, {
+                type: 'radar',
+                data: {
+                    labels: C_LEVELS.map(l => l.name),
+                    datasets: [{
+                        label: 'Current Level',
+                        data: getLatestLevels(),
+                        backgroundColor: 'rgba(212, 175, 55, 0.2)',
+                        borderColor: '#d4af37',
+                        borderWidth: 2,
+                        pointBackgroundColor: C_LEVELS.map(l => l.color),
+                        pointBorderColor: '#fff',
+                        pointRadius: 5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            min: 0,
+                            max: 7,
+                            ticks: {
+                                stepSize: 1,
+                                color: '#a0a0b0',
+                                backdropColor: 'transparent'
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            pointLabels: {
+                                color: '#ffffff',
+                                font: { size: 11 }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false }
+                    }
+                }
+            });
+            
+            // Weekly Chart
+            const weeklyCtx = document.getElementById('weeklyChart').getContext('2d');
+            const weeklyData = getWeeklyData();
+            charts.weekly = new Chart(weeklyCtx, {
+                type: 'line',
+                data: {
+                    labels: weeklyData.labels,
+                    datasets: [{
+                        label: 'Average C-Level',
+                        data: weeklyData.averages,
+                        borderColor: '#d4af37',
+                        backgroundColor: 'rgba(212, 175, 55, 0.1)',
+                        fill: true,
+                        tension: 0.4,
+                        pointRadius: 4,
+                        pointBackgroundColor: '#d4af37'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            min: 0,
+                            max: 7,
+                            ticks: { color: '#a0a0b0' },
+                            grid: { color: 'rgba(255, 255, 255, 0.05)' }
+                        },
+                        x: {
+                            ticks: { color: '#a0a0b0' },
+                            grid: { color: 'rgba(255, 255, 255, 0.05)' }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false }
+                    }
+                }
+            });
+        }
+        
+        function getLatestLevels() {
+            if (entries.length === 0) return [0, 0, 0, 0, 0, 0, 0];
+            return entries[entries.length - 1].levels;
+        }
+        
+        function getWeeklyData() {
+            const labels = [];
+            const averages = [];
+            const today = new Date();
+            
+            for (let i = 6; i >= 0; i--) {
+                const date = new Date(today);
+                date.setDate(date.getDate() - i);
+                const dateStr = date.toISOString().split('T')[0];
+                
+                labels.push(date.toLocaleDateString('en-US', { weekday: 'short' }));
+                
+                const entry = entries.find(e => e.date === dateStr);
+                if (entry) {
+                    averages.push((entry.levels.reduce((a, b) => a + b, 0) / 7).toFixed(1));
+                } else {
+                    averages.push(null);
+                }
+            }
+            
+            return { labels, averages };
+        }
+        
+        function updateCharts() {
+            if (charts.radar) {
+                charts.radar.data.datasets[0].data = getLatestLevels();
+                charts.radar.update();
+            }
+            
+            if (charts.weekly) {
+                const weeklyData = getWeeklyData();
+                charts.weekly.data.labels = weeklyData.labels;
+                charts.weekly.data.datasets[0].data = weeklyData.averages;
+                charts.weekly.update();
+            }
+        }
+        
+        // ==================== MODAL ====================
+        function openModal() {
+            const today = new Date().toISOString().split('T')[0];
+            const todayEntry = entries.find(e => e.date === today);
+            
+            if (todayEntry) {
+                currentInputValues = [...todayEntry.levels];
+                document.getElementById('journalEntry').value = todayEntry.journal || '';
+            } else {
+                currentInputValues = [4, 4, 4, 4, 4, 4, 4];
+                document.getElementById('journalEntry').value = '';
+            }
+            
+            renderCLevelInputs();
+            document.getElementById('checkinModal').classList.add('active');
+        }
+        
+        function closeModal() {
+            document.getElementById('checkinModal').classList.remove('active');
+        }
+        
+        function renderCLevelInputs() {
+            const container = document.getElementById('cLevelInputs');
+            container.innerHTML = C_LEVELS.map((level, i) => `
+                <div class="c-level-input">
+                    <div class="c-level-header">
+                        <div class="c-level-name">
+                            <div class="c-level-badge ${level.id}">${level.id.replace('c', 'C')}</div>
+                            <div>
+                                <div class="c-level-title">${level.name}</div>
+                                <div class="c-level-subtitle">${level.subtitle}</div>
+                            </div>
+                        </div>
+                        <div class="c-level-value" id="value-${level.id}">${currentInputValues[i]}</div>
+                    </div>
+                    <div class="slider-container">
+                        <input type="range" class="c-slider" min="1" max="7" value="${currentInputValues[i]}" 
+                               oninput="updateSliderValue(${i}, this.value)"
+                               style="background: linear-gradient(to right, ${level.color} 0%, ${level.color} ${((currentInputValues[i]-1)/6)*100}%, rgba(255,255,255,0.1) ${((currentInputValues[i]-1)/6)*100}%, rgba(255,255,255,0.1) 100%)">
+                        <div class="slider-labels">
+                            <span>1 - Minimal</span>
+                            <span>4 - Balanced</span>
+                            <span>7 - Mastery</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function updateSliderValue(index, value) {
+            currentInputValues[index] = parseInt(value);
+            document.getElementById(`value-${C_LEVELS[index].id}`).textContent = value;
+            
+            // Update slider background
+            const slider = document.querySelectorAll('.c-slider')[index];
+            const color = C_LEVELS[index].color;
+            const percent = ((value - 1) / 6) * 100;
+            slider.style.background = `linear-gradient(to right, ${color} 0%, ${color} ${percent}%, rgba(255,255,255,0.1) ${percent}%, rgba(255,255,255,0.1) 100%)`;
+        }
+        
+        function addPrompt(text) {
+            const textarea = document.getElementById('journalEntry');
+            textarea.value += (textarea.value ? '\n\n' : '') + text;
+            textarea.focus();
+        }
+        
+        function saveCheckin() {
+            const today = new Date().toISOString().split('T')[0];
+            const journal = document.getElementById('journalEntry').value;
+            
+            // Remove existing entry for today if exists
+            entries = entries.filter(e => e.date !== today);
+            
+            // Add new entry
+            entries.push({
+                date: today,
+                levels: [...currentInputValues],
+                journal: journal,
+                timestamp: new Date().toISOString()
+            });
+            
+            // Sort by date
+            entries.sort((a, b) => new Date(a.date) - new Date(b.date));
+            
+            // Save
+            localStorage.setItem('consciousnessEntries', JSON.stringify(entries));
+            
+            // Update goals
+            updateGoalsFromEntry(currentInputValues);
+            
+            closeModal();
+            updateHeader();
+            renderDashboard();
+            updateCharts();
+            
+            // Show success feedback
+            showNotification('✨ Check-in saved successfully!');
+        }
+        
+        function updateGoalsFromEntry(levels) {
+            C_LEVELS.forEach((level, i) => {
+                goals[level.id].current = levels[i];
+            });
+            saveGoals();
+        }
+        
+        function saveGoals() {
+            localStorage.setItem('consciousnessGoals', JSON.stringify(goals));
+        }
+        
+        // ==================== HISTORY ====================
+        function renderHistory() {
+            renderHistoryChart();
+            renderEntriesList();
+        }
+        
+        function setRange(days) {
+            selectedRange = days;
+            document.querySelectorAll('.range-btn').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+            renderHistory();
+        }
+        
+        function renderHistoryChart() {
+            const container = document.querySelector('.line-chart-container');
+            
+            // Destroy existing chart if exists
+            if (charts.history) {
+                charts.history.destroy();
+            }
+            
+            const filteredEntries = getFilteredEntries();
+            
+            if (filteredEntries.length === 0) {
+                container.innerHTML = '<div class="empty-state"><div class="icon">📊</div><h3>No data yet</h3><p>Complete your first check-in to see your progress</p></div>';
+                return;
+            }
+            
+            container.innerHTML = '<canvas id="historyChart"></canvas>';
+            const ctx = document.getElementById('historyChart').getContext('2d');
+            
+            const datasets = C_LEVELS.map((level, i) => ({
+                label: level.name,
+                data: filteredEntries.map(e => e.levels[i]),
+                borderColor: level.color,
+                backgroundColor: 'transparent',
+                borderWidth: 2,
+                tension: 0.3,
+                pointRadius: 3,
+                pointBackgroundColor: level.color
+            }));
+            
+            charts.history = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: filteredEntries.map(e => new Date(e.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })),
+                    datasets: datasets
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            min: 0,
+                            max: 7,
+                            ticks: { color: '#a0a0b0' },
+                            grid: { color: 'rgba(255, 255, 255, 0.05)' }
+                        },
+                        x: {
+                            ticks: { color: '#a0a0b0' },
+                            grid: { color: 'rgba(255, 255, 255, 0.05)' }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: { color: '#a0a0b0', usePointStyle: true }
+                        }
+                    }
+                }
+            });
+        }
+        
+        function getFilteredEntries() {
+            if (selectedRange === 0) return entries;
+            
+            const cutoff = new Date();
+            cutoff.setDate(cutoff.getDate() - selectedRange);
+            return entries.filter(e => new Date(e.date) >= cutoff);
+        }
+        
+        function renderEntriesList() {
+            const container = document.getElementById('entriesList');
+            const filtered = getFilteredEntries().reverse();
+            
+            if (filtered.length === 0) {
+                container.innerHTML = '<div class="empty-state"><div class="icon">📝</div><h3>No entries yet</h3><p>Start tracking your consciousness journey today</p></div>';
+                return;
+            }
+            
+            container.innerHTML = filtered.map(entry => {
+                const avg = (entry.levels.reduce((a, b) => a + b, 0) / 7).toFixed(1);
+                const date = new Date(entry.date);
+                
+                return `
+                    <div class="entry-card" onclick="viewEntry('${entry.date}')">
+                        <div class="entry-header">
+                            <div class="entry-date">${date.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}</div>
+                            <div class="entry-avg">C${avg}</div>
+                        </div>
+                        <div class="entry-levels">
+                            ${entry.levels.map((level, i) => {
+                                const opacity = level / 7;
+                                return `<div class="entry-level-dot" style="background: ${C_LEVELS[i].color}; opacity: ${0.3 + opacity * 0.7};"></div>`;
+                            }).join('')}
+                        </div>
+                        ${entry.journal ? `<div class="entry-journal-preview">"${entry.journal.substring(0, 100)}${entry.journal.length > 100 ? '...' : ''}"</div>` : ''}
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        function viewEntry(date) {
+            const entry = entries.find(e => e.date === date);
+            if (entry) {
+                currentInputValues = [...entry.levels];
+                document.getElementById('journalEntry').value = entry.journal || '';
+                renderCLevelInputs();
+                document.getElementById('checkinModal').classList.add('active');
+            }
+        }
+        
+        // ==================== INSIGHTS ====================
+        function renderInsights() {
+            const container = document.getElementById('insightsGrid');
+            
+            if (entries.length === 0) {
+                container.innerHTML = '<div class="empty-state" style="grid-column: span 3;"><div class="icon">💡</div><h3>No insights yet</h3><p>Complete more check-ins to unlock insights about your consciousness patterns</p></div>';
+                return;
+            }
+            
+            // Calculate insights
+            const totalEntries = entries.length;
+            const streak = calculateStreak();
+            const allLevels = entries.map(e => e.levels);
+            
+            // Average per level
+            const avgPerLevel = C_LEVELS.map((_, i) => {
+                const sum = allLevels.reduce((acc, levels) => acc + levels[i], 0);
+                return (sum / totalEntries).toFixed(1);
+            });
+            
+            // Strongest level
+            const strongestIdx = avgPerLevel.indexOf(Math.max(...avgPerLevel));
+            
+            // Most growth (compare first 7 to last 7)
+            let growthLevel = 0;
+            let maxGrowth = 0;
+            if (entries.length >= 14) {
+                const first7 = entries.slice(0, 7);
+                const last7 = entries.slice(-7);
+                
+                C_LEVELS.forEach((_, i) => {
+                    const firstAvg = first7.reduce((acc, e) => acc + e.levels[i], 0) / 7;
+                    const lastAvg = last7.reduce((acc, e) => acc + e.levels[i], 0) / 7;
+                    const growth = lastAvg - firstAvg;
+                    if (growth > maxGrowth) {
+                        maxGrowth = growth;
+                        growthLevel = i;
+                    }
+                });
+            }
+            
+            // Overall average
+            const overallAvg = (avgPerLevel.reduce((a, b) => parseFloat(a) + parseFloat(b), 0) / 7).toFixed(2);
+            
+            // Journal words
+            const totalWords = entries.reduce((acc, e) => acc + (e.journal ? e.journal.split(' ').length : 0), 0);
+            
+            container.innerHTML = `
+                <div class="insight-card">
+                    <h3>📊 Total Check-ins</h3>
+                    <div class="insight-value">${totalEntries}</div>
+                    <div class="insight-label">entries recorded</div>
+                    <div class="insight-detail">You've been tracking for ${totalEntries} days. ${streak > 0 ? `Current streak: ${streak} days! 🔥` : 'Start a streak today!'}</div>
+                </div>
+                
+                <div class="insight-card">
+                    <h3>⚡ Overall C-Level</h3>
+                    <div class="insight-value">C${overallAvg}</div>
+                    <div class="insight-label">average consciousness</div>
+                    <div class="insight-detail">Based on all your entries, your consciousness operates at approximately ${(overallAvg * 100000).toLocaleString()}x baseline human awareness.</div>
+                </div>
+                
+                <div class="insight-card">
+                    <h3>💪 Strongest Level</h3>
+                    <div class="strongest-level">
+                        <div class="level-indicator" style="background: ${C_LEVELS[strongestIdx].color}">${C_LEVELS[strongestIdx].id.replace('c', 'C')}</div>
+                        <div>
+                            <div style="font-size: 1.2rem; color: var(--white)">${C_LEVELS[strongestIdx].name}</div>
+                            <div style="color: var(--gray)">Avg: ${avgPerLevel[strongestIdx]}</div>
+                        </div>
+                    </div>
+                    <div class="insight-detail">${C_LEVELS[strongestIdx].subtitle} - This is your dominant consciousness mode.</div>
+                </div>
+                
+                ${entries.length >= 14 ? `
+                <div class="insight-card">
+                    <h3>📈 Most Growth</h3>
+                    <div class="growth-level">
+                        <div class="level-indicator" style="background: ${C_LEVELS[growthLevel].color}">${C_LEVELS[growthLevel].id.replace('c', 'C')}</div>
+                        <div>
+                            <div style="font-size: 1.2rem; color: var(--white)">${C_LEVELS[growthLevel].name}</div>
+                            <div style="color: var(--success)">+${maxGrowth.toFixed(1)} growth</div>
+                        </div>
+                    </div>
+                    <div class="insight-detail">Comparing your first week to your most recent week, this level has shown the most improvement!</div>
+                </div>
+                ` : ''}
+                
+                <div class="insight-card">
+                    <h3>📝 Journal Words</h3>
+                    <div class="insight-value">${totalWords.toLocaleString()}</div>
+                    <div class="insight-label">words written</div>
+                    <div class="insight-detail">You've reflected deeply on your consciousness journey. ${totalWords > 1000 ? 'Amazing dedication to self-awareness!' : 'Keep journaling to deepen your insights.'}</div>
+                </div>
+                
+                <div class="insight-card">
+                    <h3>🎯 Level Distribution</h3>
+                    <div style="margin-top: 1rem;">
+                        ${C_LEVELS.map((level, i) => `
+                            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                                <div style="width: 30px; font-size: 0.8rem; color: var(--gray)">${level.id.toUpperCase()}</div>
+                                <div style="flex: 1; height: 12px; background: rgba(255,255,255,0.1); border-radius: 6px; overflow: hidden;">
+                                    <div style="width: ${(avgPerLevel[i] / 7) * 100}%; height: 100%; background: ${level.color}; border-radius: 6px;"></div>
+                                </div>
+                                <div style="width: 30px; font-family: 'JetBrains Mono'; font-size: 0.9rem; color: ${level.color}">${avgPerLevel[i]}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+        
+        // ==================== GOALS ====================
+        function renderGoals() {
+            const container = document.getElementById('goalsGrid');
+            
+            container.innerHTML = C_LEVELS.map((level, i) => {
+                const goal = goals[level.id];
+                const progress = Math.min((goal.current / goal.target) * 100, 100);
+                const isComplete = goal.current >= goal.target;
+                
+                return `
+                    <div class="goal-card">
+                        <div class="goal-header">
+                            <div class="goal-level-badge" style="background: ${level.color}">${level.id.replace('c', 'C')}</div>
+                            <div class="goal-info">
+                                <h4>${level.name}</h4>
+                                <p>${level.subtitle}</p>
+                            </div>
+                        </div>
+                        <div class="goal-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: ${progress}%; background: ${isComplete ? 'var(--success)' : level.color}"></div>
+                            </div>
+                            <div class="progress-text">
+                                <span>Current: ${goal.current}</span>
+                                <span>${isComplete ? '✅ Goal Reached!' : `Target: ${goal.target}`}</span>
+                            </div>
+                        </div>
+                        <div class="goal-target-input">
+                            <span style="color: var(--gray)">Set Target:</span>
+                            <input type="number" class="target-input" min="1" max="7" value="${goal.target}" 
+                                   onchange="updateGoalTarget('${level.id}', this.value)">
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        function updateGoalTarget(levelId, value) {
+            goals[levelId].target = Math.min(Math.max(parseInt(value) || 1, 1), 7);
+            saveGoals();
+            renderGoals();
+        }
+        
+        // ==================== SETTINGS ====================
+        function exportData(format) {
+            if (entries.length === 0) {
+                showNotification('⚠️ No data to export');
+                return;
+            }
+            
+            let content, filename, type;
+            
+            if (format === 'json') {
+                content = JSON.stringify({ entries, goals, exportDate: new Date().toISOString() }, null, 2);
+                filename = 'consciousness-tracker-export.json';
+                type = 'application/json';
+            } else {
+                // CSV
+                const headers = ['Date', 'C1', 'C2', 'C3', 'C4', 'C5', 'C6', 'C7', 'Average', 'Journal'];
+                const rows = entries.map(e => {
+                    const avg = (e.levels.reduce((a, b) => a + b, 0) / 7).toFixed(2);
+                    return [e.date, ...e.levels, avg, `"${(e.journal || '').replace(/"/g, '""')}"`].join(',');
+                });
+                content = [headers.join(','), ...rows].join('\n');
+                filename = 'consciousness-tracker-export.csv';
+                type = 'text/csv';
+            }
+            
+            const blob = new Blob([content], { type });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.click();
+            URL.revokeObjectURL(url);
+            
+            showNotification(`✅ Data exported as ${format.toUpperCase()}`);
+        }
+        
+        function confirmClearData() {
+            if (confirm('⚠️ Are you sure you want to delete ALL your data? This cannot be undone!')) {
+                if (confirm('🛑 FINAL WARNING: This will permanently delete all entries, goals, and progress. Continue?')) {
+                    entries = [];
+                    goals = {};
+                    localStorage.removeItem('consciousnessEntries');
+                    localStorage.removeItem('consciousnessGoals');
+                    
+                    // Reinitialize
+                    C_LEVELS.forEach((level) => {
+                        goals[level.id] = { target: 5, current: 0 };
+                    });
+                    saveGoals();
+                    
+                    updateHeader();
+                    renderDashboard();
+                    updateCharts();
+                    
+                    showNotification('🗑️ All data has been cleared');
+                }
+            }
+        }
+        
+        // ==================== NOTIFICATIONS ====================
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                bottom: 2rem;
+                left: 50%;
+                transform: translateX(-50%);
+                background: linear-gradient(135deg, var(--navy-mid), var(--navy-light));
+                border: 1px solid var(--gold);
+                color: var(--white);
+                padding: 1rem 2rem;
+                border-radius: 10px;
+                font-size: 1rem;
+                z-index: 2000;
+                animation: slideUp 0.3s ease;
+            `;
+            notification.innerHTML = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'fadeOut 0.3s ease forwards';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+    </script>
+    
+    <style>
+        @keyframes slideUp {
+            from { opacity: 0; transform: translate(-50%, 20px); }
+            to { opacity: 1; transform: translate(-50%, 0); }
+        }
+        @keyframes fadeOut {
+            to { opacity: 0; }
+        }
+    </style>
+</body>
+</html>
